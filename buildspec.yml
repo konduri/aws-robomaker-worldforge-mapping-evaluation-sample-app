@@ -1,0 +1,23 @@
+version: 0.2 
+env:
+  variables:
+    S3_BUCKET: data-client
+    SIMULATION_WS: simulation_ws
+    ROS_VERSION: melodic
+phases: 
+  pre_build:
+    commands:
+      - apt update
+      - . /opt/ros/$ROS_VERSION/setup.sh
+      - rosdep update
+      - rosdep fix-permissions
+      - rosws update --target-workspace ./$SIMULATION_WS
+      - rosdep install -y -r --from-path ./$SIMULATION_WS/src
+  build: 
+    commands: 
+      - cd ./$SIMULATION_WS
+      - colcon build
+      - colcon bundle
+  post_build: 
+    commands: 
+      - aws s3 cp ./$SIMULATION_WS/bundle/output.tar s3://$S3_BUCKET/bundles/x86/simulationApp.tar
