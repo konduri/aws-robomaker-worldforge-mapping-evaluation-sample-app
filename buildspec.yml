@@ -11,6 +11,7 @@ phases:
       - . /opt/ros/$ROS_VERSION/setup.sh
       - rosdep update
       - rosdep fix-permissions
+      - aws --version
       - rosws update --target-workspace ./$SIMULATION_WS
       - rosdep install -y -r --from-path ./$SIMULATION_WS/src
   build: 
