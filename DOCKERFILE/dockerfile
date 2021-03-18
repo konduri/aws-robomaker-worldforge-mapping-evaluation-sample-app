@@ -1,0 +1,19 @@
+FROM ros:melodic
+
+RUN apt-get update
+RUN apt-get install unzip curl ca-certificates wget -y
+
+RUN wget http://packages.osrfoundation.org/gazebo.key
+RUN apt-key add gazebo.key
+RUN echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list
+
+#RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+#RUN curl -sSL 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xC1CF6E31E6BADE8868B172B4F42ED6FBAB17C654' | apt-key add -
+
+RUN apt-get update
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && ./aws/install
+
+RUN apt-get update && apt-get install -y python3-pip python3-apt python3-colcon-common-extensions
+
+RUN pip3 install -U setuptools pip
+RUN pip3 install colcon-ros-bundle
