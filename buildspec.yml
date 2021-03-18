@@ -19,4 +19,4 @@ phases:
       - colcon bundle --base-paths ./$SIMULATION_WS/src
   post_build: 
     commands: 
-      - aws s3 cp ./bundle/output.tar s3://$S3_BUCKET/bundles/x86/simulationApp.tar
+      - aws s3 cp ./bundle/output.tar s3://$S3_BUCKET/bundles/x86/mapping_simulation_app.tar
